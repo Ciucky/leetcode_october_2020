@@ -1,30 +1,30 @@
 package com.october.week1;
+import java.util.*;
 
 public class RecentCounter {
 
-	int req, max;
+	int req;
+	List<Integer> pings = new ArrayList<Integer>();
 	public RecentCounter() {
 		this.req = 0;
-		this.max = -1;
 	}
 	
 	public int ping(int t) {
-		int min = t - 3000;
-
-		if(req == 0)
-			max = t;
+		//System.out.println("t: " + t);
+		pings.add(t+3000);
 		
-		if(min > max) {
-			max = min;
-			return req;
-		}
-		else{
-			req++;
-			return req;
-		}
-			
-		
-		
+		for(int i = 0; i < pings.size()-1; i++) {
+			//System.out.println("i: " + i + " ping: " + pings.get(i));
+			if(t > pings.get(i)) {
+				req--;
+				//System.out.println("removed " + pings.get(i) + " req: " + req);
+				pings.remove(i);
+				i--;
+			}
+				
+		} 
+		req++;
+		return req;
 	}
 	
 	public static void main(String[] args) {
